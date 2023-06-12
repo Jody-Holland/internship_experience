@@ -1317,18 +1317,19 @@ coastline from data collected in 2021</p>
 <div id="setup-data" class="section level1">
 <h1>Setup Data</h1>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load year aggs, exclude jan 2022</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>year_df <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">&quot;data_2021.csv&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(MONTH <span class="sc">!=</span> <span class="st">&quot;January&quot;</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># split off into coords</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>split_coords <span class="ot">=</span> <span class="fu">strsplit</span>(year_df<span class="sc">$</span>COORDENADAS, <span class="st">&quot;,&quot;</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>year_df<span class="sc">$</span>y <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">sapply</span>(split_coords, <span class="st">&quot;[&quot;</span>, <span class="dv">1</span>))</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>year_df<span class="sc">$</span>x <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">sapply</span>(split_coords, <span class="st">&quot;[&quot;</span>, <span class="dv">2</span>))</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># extract coords from df and create sf</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>year_sf <span class="ot">=</span> year_df</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">coordinates</span>(year_sf) <span class="ot">=</span>  <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>year_sf <span class="ot">=</span> <span class="fu">st_as_sf</span>(year_sf, </span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                   <span class="at">crs =</span> <span class="dv">4326</span>)</span></code></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>year_df <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">&quot;data_2021.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Month <span class="sc">!=</span> <span class="st">&quot;January&quot;</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># split off into coords</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>split_coords <span class="ot">=</span> <span class="fu">strsplit</span>(year_df<span class="sc">$</span>COORDENADAS, <span class="st">&quot;,&quot;</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>year_df<span class="sc">$</span>y <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">sapply</span>(split_coords, <span class="st">&quot;[&quot;</span>, <span class="dv">1</span>))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>year_df<span class="sc">$</span>x <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">sapply</span>(split_coords, <span class="st">&quot;[&quot;</span>, <span class="dv">2</span>))</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># extract coords from df and create sf</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>year_sf <span class="ot">=</span> year_df</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">coordinates</span>(year_sf) <span class="ot">=</span>  <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>year_sf <span class="ot">=</span> <span class="fu">st_as_sf</span>(year_sf, </span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                   <span class="at">crs =</span> <span class="dv">4326</span>)</span></code></pre></div>
 </div>
 <div id="build-ui" class="section level1">
 <h1>Build UI</h1>
@@ -1356,32 +1357,33 @@ outlined here</p>
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&quot;Select Months&quot;</span>,</span>
 <span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">choices =</span> <span class="fu">unique</span>(year_sf<span class="sc">$</span>MONTH)),</span>
 <span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set the output to be a tmap</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tmapOutput</span>(<span class="st">&quot;map&quot;</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tmapOutput</span>(<span class="st">&quot;map&quot;</span>, <span class="at">width =</span> <span class="st">&quot;100%&quot;</span>, <span class="at">height =</span> <span class="dv">800</span>)</span>
 <span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## Warning: Unknown or uninitialised column: `MONTH`.</code></pre>
 </div>
 <div id="build-server" class="section level1">
 <h1>Build Server</h1>
 <p>The second component of the map shiny app is the server code, this is
 outlined below</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set up shiny server</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>server <span class="ot">=</span> <span class="cf">function</span>(input,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                  output) {</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>map <span class="ot">=</span> <span class="fu">renderTmap</span>({</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add month select notice when its 0</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">validate</span>(</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">need</span>(<span class="fu">length</span>(input<span class="sc">$</span>months) <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="st">&quot;Please select at least one month&quot;</span>))</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>      filtered_sf <span class="ot">=</span> year_sf[year_sf<span class="sc">$</span>MONTH <span class="sc">%in%</span> input<span class="sc">$</span>months, ]</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      <span class="co"># create map set with base map OSM</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tm_basemap</span>(<span class="at">server =</span> <span class="st">&quot;OpenStreetMap&quot;</span>) <span class="sc">+</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tm_shape</span>(filtered_sf) <span class="sc">+</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># adjust size and colour based on kg</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>          <span class="fu">tm_dots</span>(<span class="at">col =</span> input<span class="sc">$</span>litter_type,</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">size =</span> input<span class="sc">$</span>litter_type) <span class="sc">+</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>          <span class="fu">tm_layout</span>(<span class="at">title =</span> <span class="st">&quot;Amount Collected (kg)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>          <span class="fu">tm_view</span>(<span class="at">view.legend.position =</span> <span class="fu">c</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;bottom&quot;</span>))</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set up shiny server</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>server <span class="ot">=</span> <span class="cf">function</span>(input,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                  output) {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>map <span class="ot">=</span> <span class="fu">renderTmap</span>({</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add month select notice when its 0</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">validate</span>(</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">need</span>(<span class="fu">length</span>(input<span class="sc">$</span>months) <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="st">&quot;Please select at least one month&quot;</span>))</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>      filtered_sf <span class="ot">=</span> year_sf[year_sf<span class="sc">$</span>MONTH <span class="sc">%in%</span> input<span class="sc">$</span>months, ]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>      <span class="co"># create map set with base map OSM</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tm_basemap</span>(<span class="at">server =</span> <span class="st">&quot;OpenStreetMap&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tm_shape</span>(filtered_sf) <span class="sc">+</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># adjust size and colour based on kg</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>          <span class="fu">tm_dots</span>(<span class="at">col =</span> input<span class="sc">$</span>litter_type,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">size =</span> input<span class="sc">$</span>litter_type) <span class="sc">+</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>          <span class="fu">tm_layout</span>(<span class="at">title =</span> <span class="st">&quot;Amount Collected (kg)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>          <span class="fu">tm_view</span>(<span class="at">view.legend.position =</span> <span class="fu">c</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;bottom&quot;</span>))</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="link-to-shinyapp" class="section level1">
 <h1><strong>Link to ShinyApp</strong></h1>
