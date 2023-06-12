@@ -1317,73 +1317,114 @@ coastline from data collected in 2021</p>
 <div id="setup-data" class="section level1">
 <h1>Setup Data</h1>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load year aggs, exclude jan 2022</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>year_df <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">&quot;data_2021.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Month <span class="sc">!=</span> <span class="st">&quot;January&quot;</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># split off into coords</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>split_coords <span class="ot">=</span> <span class="fu">strsplit</span>(year_df<span class="sc">$</span>COORDENADAS, <span class="st">&quot;,&quot;</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>year_df<span class="sc">$</span>y <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">sapply</span>(split_coords, <span class="st">&quot;[&quot;</span>, <span class="dv">1</span>))</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>year_df<span class="sc">$</span>x <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">sapply</span>(split_coords, <span class="st">&quot;[&quot;</span>, <span class="dv">2</span>))</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># extract coords from df and create sf</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>year_sf <span class="ot">=</span> year_df</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">coordinates</span>(year_sf) <span class="ot">=</span>  <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>year_sf <span class="ot">=</span> <span class="fu">st_as_sf</span>(year_sf, </span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                   <span class="at">crs =</span> <span class="dv">4326</span>)</span></code></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>year_df <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">&quot;data_2021.csv&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Month <span class="sc">!=</span> <span class="st">&quot;January&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>year_df[]</span></code></pre></div>
+<pre><code>## # A tibble: 322 × 20
+##    PLAYA       Month   Day TEMPE…¹ COORD…² ZONA  CONDI…³ COORD…⁴ COORD…⁵ Plastic
+##    &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;
+##  1 COSTA CALM… March     1 Cielo … 28.166… SUR   VIENTO  28.167… 28.169…    7.5 
+##  2 PLAYA DE M… March     1 Cielo … 28.168… SUR   VIENTO  28.169… 28.174…    7.5 
+##  3 PLAYA DE M… March     1 Cielo … 28.174… SUR   VIENTO  28.174… 28.174…    3.15
+##  4 MIRADOR DE… March     1 Cielo … 28.172… SUR   VIENTO  28.173… 28.173…    4   
+##  5 DESPUÉS DE… March     2 Cielo … 28.174… SUR   &lt;NA&gt;    28.174… 28.174…    2.8 
+##  6 DESPUÉS DE… March     2 Cielo … 28.174… SUR   &lt;NA&gt;    28.175… 28.174…    3   
+##  7 PLAYA LA L… March     2 Cielo … 28.178… SUR   &lt;NA&gt;    28.179… 28.182…    1.26
+##  8 BAJA DEL T… March     3 &lt;NA&gt;    28.069… NORTE MUCHO … 28.070… 28.078…   17.5 
+##  9 FINAL PLAY… March     3 &lt;NA&gt;    28.077… NORTE VIENTO  28.079… 28.082…    8.1 
+## 10 BAJA DEL T… March     4 Cielo … 28.070… NORTE MUCHO … 28.070… 28.078…    9.2 
+## # … with 312 more rows, 10 more variables: Rubber &lt;dbl&gt;, Textile &lt;dbl&gt;,
+## #   `Paper/cardboard` &lt;dbl&gt;, Wood &lt;dbl&gt;, Metal &lt;dbl&gt;, Glass &lt;dbl&gt;,
+## #   `Ceramics and construction debris` &lt;dbl&gt;,
+## #   `MSW (municipal solid waste)` &lt;dbl&gt;, Feces &lt;dbl&gt;,
+## #   `Total kilograms collected` &lt;dbl&gt;, and abbreviated variable names
+## #   ¹​TEMPERATURA, ²​COORDENADAS, ³​`CONDIC. ATMOSF.`, ⁴​`COORD. INICIO`,
+## #   ⁵​`COORD. FINAL`</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create date format</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>year_df<span class="sc">$</span>Date <span class="ot">=</span> <span class="fu">as.Date</span>(<span class="fu">paste</span>(<span class="st">&quot;2021&quot;</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                             year_df<span class="sc">$</span>Month,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                             year_df<span class="sc">$</span>Day,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">sep =</span> <span class="st">&quot;-&quot;</span>),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">format =</span> <span class="st">&quot;%Y-%B-%d&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">format</span>(<span class="st">&quot;%Y-%m%-%d&quot;</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># split off into coords</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>split_coords <span class="ot">=</span> <span class="fu">strsplit</span>(year_df<span class="sc">$</span>COORDENADAS, <span class="st">&quot;,&quot;</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>year_df<span class="sc">$</span>y <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">sapply</span>(split_coords, <span class="st">&quot;[&quot;</span>, <span class="dv">1</span>))</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>year_df<span class="sc">$</span>x <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">sapply</span>(split_coords, <span class="st">&quot;[&quot;</span>, <span class="dv">2</span>))</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># extract coords from df and create sf</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>year_sf <span class="ot">=</span> year_df</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="fu">coordinates</span>(year_sf) <span class="ot">=</span>  <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>year_sf <span class="ot">=</span> <span class="fu">st_as_sf</span>(year_sf, </span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                   <span class="at">crs =</span> <span class="dv">4326</span>)</span></code></pre></div>
 </div>
 <div id="build-ui" class="section level1">
 <h1>Build UI</h1>
 <p>The first component of the map shiny app is the ui, the code is
 outlined here</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build ui, first set title</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">=</span> <span class="fu">fluidPage</span>(<span class="fu">titlePanel</span>(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Visualising the Litter Collected in Southern Fuerteventura 2021&quot;</span>),</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># make litter selection panel</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">selectInput</span>(<span class="st">&quot;litter_type&quot;</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;Select Litter Type&quot;</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">choices =</span> <span class="fu">c</span>(<span class="st">&quot;Metal&quot;</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;Plastic&quot;</span>,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;Rubber&quot;</span>,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;Textile&quot;</span>,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;Paper/cardboard&quot;</span>,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;Wood&quot;</span>,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;Glass&quot;</span>,</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;Ceramics and construction debris&quot;</span>,</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;MSW (municipal solid waste)&quot;</span>,</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;Feces&quot;</span>,</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;Total kilograms collected&quot;</span>)),</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># make month tick boxes</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">checkboxGroupInput</span>(<span class="st">&quot;months&quot;</span>,</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&quot;Select Months&quot;</span>,</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">choices =</span> <span class="fu">unique</span>(year_sf<span class="sc">$</span>MONTH)),</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set the output to be a tmap</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tmapOutput</span>(<span class="st">&quot;map&quot;</span>, <span class="at">width =</span> <span class="st">&quot;100%&quot;</span>, <span class="at">height =</span> <span class="dv">800</span>)</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<pre><code>## Warning: Unknown or uninitialised column: `MONTH`.</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build ui, first set title</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">=</span> <span class="fu">fluidPage</span>(<span class="fu">titlePanel</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Visualising the Litter Collected in Southern Fuerteventura 2021&quot;</span>),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># make litter selection panel</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">selectInput</span>(<span class="st">&quot;litter_type&quot;</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;Select Litter Type&quot;</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">choices =</span> <span class="fu">c</span>(<span class="st">&quot;Metal&quot;</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;Plastic&quot;</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;Rubber&quot;</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;Textile&quot;</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;Paper/cardboard&quot;</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;Wood&quot;</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;Glass&quot;</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;Ceramics and construction debris&quot;</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;MSW (municipal solid waste)&quot;</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;Feces&quot;</span>,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;Total kilograms collected&quot;</span>)),</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># make date range selection</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sliderInput</span>(</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;timeline&quot;</span>,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Select Time Range:&quot;</span>,</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">min =</span> <span class="fu">as.Date</span>(<span class="st">&quot;2021-03-01&quot;</span>),</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">max =</span> <span class="fu">as.Date</span>(<span class="st">&quot;2021-12-31&quot;</span>),</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">&quot;2021-03-01&quot;</span>), <span class="fu">as.Date</span>(<span class="st">&quot;2021-12-31&quot;</span>)),</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">timeFormat =</span> <span class="st">&quot;%Y-%m-%d&quot;</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set the output to be a tmap</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tmapOutput</span>(<span class="st">&quot;map&quot;</span>, <span class="at">width =</span> <span class="st">&quot;100%&quot;</span>, <span class="at">height =</span> <span class="dv">800</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 <div id="build-server" class="section level1">
 <h1>Build Server</h1>
 <p>The second component of the map shiny app is the server code, this is
 outlined below</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set up shiny server</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>server <span class="ot">=</span> <span class="cf">function</span>(input,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                  output) {</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>map <span class="ot">=</span> <span class="fu">renderTmap</span>({</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add month select notice when its 0</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">validate</span>(</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">need</span>(<span class="fu">length</span>(input<span class="sc">$</span>months) <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="st">&quot;Please select at least one month&quot;</span>))</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>      filtered_sf <span class="ot">=</span> year_sf[year_sf<span class="sc">$</span>MONTH <span class="sc">%in%</span> input<span class="sc">$</span>months, ]</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>      <span class="co"># create map set with base map OSM</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tm_basemap</span>(<span class="at">server =</span> <span class="st">&quot;OpenStreetMap&quot;</span>) <span class="sc">+</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tm_shape</span>(filtered_sf) <span class="sc">+</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># adjust size and colour based on kg</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>          <span class="fu">tm_dots</span>(<span class="at">col =</span> input<span class="sc">$</span>litter_type,</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">size =</span> input<span class="sc">$</span>litter_type) <span class="sc">+</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>          <span class="fu">tm_layout</span>(<span class="at">title =</span> <span class="st">&quot;Amount Collected (kg)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>          <span class="fu">tm_view</span>(<span class="at">view.legend.position =</span> <span class="fu">c</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;bottom&quot;</span>))</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>server <span class="ot">=</span> <span class="cf">function</span>(input,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                  output) {</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>map <span class="ot">=</span> <span class="fu">renderTmap</span>({</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># validate timeline input</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">validate</span>(</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">need</span>(</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        year_sf<span class="sc">$</span>Date <span class="sc">&gt;=</span> input<span class="sc">$</span>timeline[<span class="dv">1</span>] <span class="sc">&amp;</span> year_sf<span class="sc">$</span>Date <span class="sc">&lt;=</span> input<span class="sc">$</span>timeline[<span class="dv">2</span>],</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Please select a valid time range&quot;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    filtered_sf <span class="ot">=</span> year_sf[year_sf<span class="sc">$</span>Date <span class="sc">&gt;=</span> input<span class="sc">$</span>timeline[<span class="dv">1</span>] <span class="sc">&amp;</span> year_sf<span class="sc">$</span>Date <span class="sc">&lt;=</span> input<span class="sc">$</span>timeline[<span class="dv">2</span>], ]</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># create map set with base map OSM</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_basemap</span>(<span class="at">server =</span> <span class="st">&quot;OpenStreetMap&quot;</span>) <span class="sc">+</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tm_shape</span>(filtered_sf) <span class="sc">+</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>      <span class="co"># adjust size and colour based on kg</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_dots</span>(<span class="at">col =</span> input<span class="sc">$</span>litter_type,</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">size =</span> input<span class="sc">$</span>litter_type,</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">popup.vars =</span> <span class="fu">c</span>(<span class="st">&quot;Date&quot;</span>, input<span class="sc">$</span>litter_type)) <span class="sc">+</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tm_layout</span>(<span class="at">title =</span> <span class="st">&quot;Amount Collected (kg)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tm_view</span>(<span class="at">view.legend.position =</span> <span class="fu">c</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;bottom&quot;</span>))</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code></pre></div>
+<pre><code>## PhantomJS not found. You can install it with webshot::install_phantomjs(). If it is installed, please make sure the phantomjs executable can be found via the PATH variable.</code></pre>
+<div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div>
 </div>
 <div id="link-to-shinyapp" class="section level1">
 <h1><strong>Link to ShinyApp</strong></h1>
